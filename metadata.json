@@ -1,0 +1,6 @@
+{
+  "name": "OSISVote SMAN 2 Cibinong",
+  "description": "Sistem E-Voting Pemilihan Ketua dan Wakil Ketua OSIS SMAN 2 Cibinong berbasis LUBER JURDIL dengan panel KPU, manajemen DPT, generator kartu suara, dan rekapitulasi Berita Acara.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

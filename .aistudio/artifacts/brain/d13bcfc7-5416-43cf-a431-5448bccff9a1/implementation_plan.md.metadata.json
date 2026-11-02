@@ -1,0 +1,6 @@
+{
+  "summary":  "Rencana implementasi menyeluruh untuk aplikasi OSISVote (E-Voting Pemilihan Ketua OSIS SMAN 2 Cibinong) dengan fitur otentikasi ganda (NIS/NIP + Token unik), panel admin KPU sekolah, manajemen DPT & kandidat, generator kartu pemilih PDF ber-QR code & WhatsApp share, kotak suara anonim (LUBER JURDIL), grafik hasil pemilihan real-time, dan Berita Acara resmi.",
+  "updatedAt":  "2026-11-02T03:54:56.731994058Z",
+  "requestFeedback":  true,
+  "userFacing":  true
+}

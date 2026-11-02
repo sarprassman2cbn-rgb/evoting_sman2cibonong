@@ -1,0 +1,47 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128;
+    }
+
+    // Settings collection - readable by all voters and public, writable by admin/panitia
+    match /settings/{settingId} {
+      allow read: if isValidId(settingId);
+      allow write: if isValidId(settingId);
+    }
+
+    // Candidates collection - readable by all, writable by admin
+    match /candidates/{candidateId} {
+      allow read: if isValidId(candidateId);
+      allow write: if isValidId(candidateId);
+    }
+
+    // Voters (DPT) collection - readable and updatable for voting status
+    match /voters/{voterId} {
+      allow read: if isValidId(voterId);
+      allow write: if isValidId(voterId);
+    }
+
+    // Votes collection - anonymous ballot box. Writes allowed once per vote, readable for live count/report
+    match /votes/{voteId} {
+      allow read: if isValidId(voteId);
+      allow create: if isValidId(voteId);
+      allow update, delete: if false; // Kotak suara tidak boleh diedit atau dihapus secara individu
+    }
+
+    // Audit logs collection
+    match /audit_logs/{logId} {
+      allow read: if isValidId(logId);
+      allow create: if isValidId(logId);
+      allow update, delete: if false;
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

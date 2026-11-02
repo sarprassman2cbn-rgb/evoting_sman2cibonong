@@ -1,0 +1,183 @@
+{
+  "entities": {
+    "ElectionSettings": {
+      "title": "ElectionSettings",
+      "description": "Konfigurasi utama pemilihan ketua OSIS SMAN 2 Cibinong",
+      "type": "object",
+      "properties": {
+        "school_name": {
+          "type": "string",
+          "description": "Nama resmi sekolah"
+        },
+        "school_badge_url": {
+          "type": "string",
+          "description": "URL logo atau emblem sekolah"
+        },
+        "academic_year": {
+          "type": "string",
+          "description": "Tahun ajaran periode pemilihan"
+        },
+        "status_pemilu": {
+          "type": "boolean",
+          "description": "Status masa pemilihan dibuka atau ditutup"
+        },
+        "status_live_count": {
+          "type": "boolean",
+          "description": "Status tampilan grafik hasil suara dibuka atau dikunci"
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "Waktu terakhir konfigurasi diubah"
+        }
+      },
+      "required": ["school_name", "status_pemilu", "status_live_count"]
+    },
+    "Candidate": {
+      "title": "Candidate",
+      "description": "Data pasangan calon Ketua dan Wakil Ketua OSIS",
+      "type": "object",
+      "properties": {
+        "nomor_urut": {
+          "type": "number",
+          "description": "Nomor urut paslon"
+        },
+        "nama_ketua": {
+          "type": "string",
+          "description": "Nama calon ketua OSIS"
+        },
+        "nama_wakil": {
+          "type": "string",
+          "description": "Nama calon wakil ketua OSIS"
+        },
+        "visi": {
+          "type": "string",
+          "description": "Pernyataan visi paslon"
+        },
+        "misi": {
+          "type": "string",
+          "description": "Daftar misi paslon"
+        },
+        "program_kerja": {
+          "type": "string",
+          "description": "Ringkasan program unggulan"
+        },
+        "foto_url": {
+          "type": "string",
+          "description": "URL foto resmi paslon"
+        },
+        "video_url": {
+          "type": "string",
+          "description": "Tautan video kampanye paslon"
+        },
+        "created_at": {
+          "type": "string",
+          "description": "Waktu penambahan kandidat"
+        }
+      },
+      "required": ["nomor_urut", "nama_ketua", "nama_wakil", "visi", "misi"]
+    },
+    "Voter": {
+      "title": "Voter",
+      "description": "Data pemilih tetap (Siswa, Guru, Admin)",
+      "type": "object",
+      "properties": {
+        "identitas": {
+          "type": "string",
+          "description": "NIS siswa, NIP guru, atau username admin"
+        },
+        "nama": {
+          "type": "string",
+          "description": "Nama lengkap pemilih"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin", "siswa", "guru"],
+          "description": "Peran akun dalam sistem pemilihan"
+        },
+        "kelas_atau_jabatan": {
+          "type": "string",
+          "description": "Kelas siswa atau jabatan guru/staf"
+        },
+        "token": {
+          "type": "string",
+          "description": "Token rahasia acak 6 karakter untuk otentikasi"
+        },
+        "is_voted": {
+          "type": "boolean",
+          "description": "Status apakah pemilih telah memberikan suara"
+        },
+        "voted_at": {
+          "type": "string",
+          "description": "Waktu pemilih memberikan suara"
+        }
+      },
+      "required": ["identitas", "nama", "role", "token", "is_voted"]
+    },
+    "AnonymousVote": {
+      "title": "AnonymousVote",
+      "description": "Kotak suara digital anonim tanpa referensi pemilih (LUBER JURDIL)",
+      "type": "object",
+      "properties": {
+        "candidate_id": {
+          "type": "string",
+          "description": "ID kandidat yang dipilih"
+        },
+        "voter_role": {
+          "type": "string",
+          "description": "Peran pemilih (siswa atau guru) untuk statistik"
+        },
+        "created_at": {
+          "type": "string",
+          "description": "Waktu suara masuk ke kotak digital"
+        }
+      },
+      "required": ["candidate_id", "created_at"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Catatan log peristiwa penting KPU OSIS",
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Jenis aksi yang dilakukan"
+        },
+        "actor": {
+          "type": "string",
+          "description": "Nama atau peran pelaku aksi"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "Waktu aksi terjadi"
+        },
+        "details": {
+          "type": "string",
+          "description": "Keterangan detail aktivitas"
+        }
+      },
+      "required": ["action", "actor", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/settings/{settingId}": {
+      "schema": "ElectionSettings",
+      "description": "Konfigurasi status pemilihan dan profil sekolah"
+    },
+    "/candidates/{candidateId}": {
+      "schema": "Candidate",
+      "description": "Daftar pasangan calon Ketua dan Wakil Ketua OSIS"
+    },
+    "/voters/{voterId}": {
+      "schema": "Voter",
+      "description": "Daftar pemilih tetap dan status hak suara"
+    },
+    "/votes/{voteId}": {
+      "schema": "AnonymousVote",
+      "description": "Kotak suara digital anonim untuk rekapitulasi LUBER JURDIL"
+    },
+    "/audit_logs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Log aktivitas operasional panitia pemilihan"
+    }
+  }
+}
